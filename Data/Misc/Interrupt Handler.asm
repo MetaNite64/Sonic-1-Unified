@@ -30,9 +30,6 @@ VInt:
 		move.w	VInt_Table(pc,d0.w),d0
 		jsr	VInt_Table(pc,d0.w)
 
-VInt_Music:
-		SMPS_UpdateSoundDriver						; update SMPS	; warning: a5-a6 will be overwritten
-
 VInt_Done:
 		jsr	(Random_Number).w
 		addq.l	#1,(V_int_run_count).w
@@ -68,7 +65,7 @@ VInt_Lag_Main:
 		beq.s	VInt_Lag_Level
 		cmpi.b	#id_LevelScreen,(Game_mode).w		; is game on a level?
 		beq.s	VInt_Lag_Level
-		bra.s	VInt_Music							; otherwise, return from V-int
+		bra.s	VInt_Done							; otherwise, return from V-int
 ; ---------------------------------------------------------------------------
 
 VInt_Lag_Level:
@@ -95,7 +92,7 @@ VInt_Lag_FullyUnderwater:
 VInt_Lag_Water_Cont:
 		move.w	(H_int_counter_command).w,VDP_control_port-VDP_control_port(a5)
 		startZ80
-		bra.w	VInt_Music
+		bra.w	VInt_Done
 ; ---------------------------------------------------------------------------
 
 VInt_Lag_NoWater:
@@ -110,7 +107,7 @@ VInt_Lag_NoWater:
 		move.w	(H_int_counter_command).w,VDP_control_port-VDP_control_port(a5)
 
 VInt_Lag_Done:
-		bra.w	VInt_Music
+		bra.w	VInt_Done
 
 ; ---------------------------------------------------------------------------
 ; Main

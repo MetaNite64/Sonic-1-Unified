@@ -334,6 +334,19 @@ ObjectLayoutBoundary macro
 RingLayoutBoundary macro
 	dc.w 0, 0, -1, -1
     endm
+; ---------------------------------------------------------------------------
+; function to make a little-endian 16-bit pointer for the Z80 sound driver
+; ---------------------------------------------------------------------------
+
+z80_ptr function x,(x)<<8&$FF00|(x)>>8&$7F|$80
+
+; ---------------------------------------------------------------------------
+; macro to declare a little-endian 16-bit pointer for the Z80 sound driver
+; ---------------------------------------------------------------------------
+
+rom_ptr_z80 macro addr
+	dc.w z80_ptr(addr)
+    endm
 
 ; ---------------------------------------------------------------------------
 ; clear the Z80 RAM
@@ -756,9 +769,9 @@ music	macro track, terminate, byte
 	move.w	#(track),d0
     endif
       if ("terminate"="0") || ("terminate"="")
-	jsr	(SMPS_QueueSound1).w
+	jsr	(Play_Music).w
       else
-	jmp	(SMPS_QueueSound1).w
+	jmp	(Play_Music).w
       endif
     endm
 
@@ -769,9 +782,9 @@ sfx	macro track, terminate, byte
 	move.w	#(track),d0
     endif
       if ("terminate"="0") || ("terminate"="")
-	jsr	(SMPS_QueueSound2).w
+	jsr	(Play_SFX).w
       else
-	jmp	(SMPS_QueueSound2).w
+	jmp	(Play_SFX).w
       endif
     endm
 
@@ -792,9 +805,9 @@ sample	macro id, terminate, byte
 emusic	macro track, terminate
 	move.w	#(track),d0
       if ("terminate"="0") || ("terminate"="")
-	jsr	(SMPS_QueueSound1_Extended).w
+	jsr	(Play_Music_Extended).w
       else
-	jmp	(SMPS_QueueSound1_Extended).w
+	jmp	(Play_Music_Extended).w
       endif
     endm
 
@@ -802,9 +815,9 @@ emusic	macro track, terminate
 esfx	macro track, terminate
 	move.w	#(track),d0
       if ("terminate"="0") || ("terminate"="")
-	jsr	(SMPS_QueueSound2_Extended).w
+	jsr	(Play_SFX_Extended).w
       else
-	jmp	(SMPS_QueueSound2_Extended).w
+	jmp	(Play_SFX_Extended).w
       endif
     endm
 

@@ -198,7 +198,7 @@ Go_CheckPlayerRelease:
 ; =============== S U B R O U T I N E =======================================
 
 Obj_Song_Fade_Transition:
-		music	mus_Fade	; fade out music
+		music	mus_FadeOut	; fade out music
 		move.l	#Song_Fade_Transition_Wait,address(a0)
 
 Song_Fade_Transition_Return:
@@ -206,17 +206,17 @@ Song_Fade_Transition_Return:
 ; ---------------------------------------------------------------------------
 
 Song_Fade_Transition_Wait:
-		tst.b	(Clone_Driver_RAM+SMPS_RAM.variables.v_fadeout_counter).w
-		bne.s	Song_Fade_Transition_Return
+		subq.w	#1,$2E(a0)
+		bpl.s	Song_Fade_Transition_Return
 		move.b	subtype(a0),d0
 		move.w	d0,(Current_music).w
-		jsr	(SMPS_QueueSound1).w	; play music
+		jsr	(Play_Music).w	; play music
 		jmp	(Delete_Current_Sprite).w
 
 ; =============== S U B R O U T I N E =======================================
 
 Obj_Song_Fade_ToLevelMusic:
-		music	mus_Fade	; fade out music
+		music	mus_FadeOut	; fade out music
 		move.l	#Song_Fade_ToLevelMusic_Wait,address(a0)
 
 Song_Fade_ToLevelMusic_Return:
@@ -224,8 +224,8 @@ Song_Fade_ToLevelMusic_Return:
 ; ---------------------------------------------------------------------------
 
 Song_Fade_ToLevelMusic_Wait:
-		tst.b	(Clone_Driver_RAM+SMPS_RAM.variables.v_fadeout_counter).w
-		bne.s	Song_Fade_ToLevelMusic_Return
+		subq.w	#1,$2E(a0)
+		bpl.s	Song_Fade_ToLevelMusic_Return
 		bsr.s	Restore_LevelMusic
 		jmp	(Delete_Current_Sprite).w
 
@@ -241,7 +241,7 @@ Restore_LevelMusic:
 		btst	#Status_Invincible,(Player_1+status_secondary).w
 		beq.s	+
 		moveq	#signextendB(mus_Invincible),d0	; if invincible, play invincibility music
-+		jmp	(SMPS_QueueSound1).w				; play music
++		jmp	(Play_Music).w				; play music
 
 ; =============== S U B R O U T I N E =======================================
 
@@ -475,7 +475,7 @@ StartNewLevel:
 Play_SFX_Continuous:
 		and.b	(V_int_run_count+3).w,d1
 		bne.s	StartNewLevel.return
-		jmp	(SMPS_QueueSound2).w	; play sfx
+		jmp	(Play_SFX).w	; play sfx
 
 ; =============== S U B R O U T I N E =======================================
 

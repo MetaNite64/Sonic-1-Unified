@@ -499,7 +499,7 @@ HurtCharacter:
 		moveq	#signextendB(sfx_SpikeHit),d0			; load spikes damage sound
 
 .sound
-		jsr	(SMPS_QueueSound2).w
+		jsr	(Play_SFX).w
 		moveq	#-1,d0
 		rts
 ; ---------------------------------------------------------------------------
@@ -536,7 +536,7 @@ loc_1036E:
 		move.b	#id_Death,anim(a0)
 		move.w	art_tile(a0),(Saved_art_tile).w
 		bset	#7,art_tile(a0)
-		jsr	(SMPS_QueueSound2).w
+		jsr	(Play_SFX).w
 
 .dontdie:
 		moveq	#-1,d0

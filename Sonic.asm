@@ -13,6 +13,7 @@ OptimiseSound:			= 1	; change to 1 to optimise sound queuing
 OptimiseStopZ80:			= 2	; if 1, remove stopZ80 and startZ80, if 2, use only for controllers(ignores sound driver)
 ZeroOffsetOptimization:	= 1	; if 1, makes a handful of zero-offset instructions smaller
 AllOptimizations:			= 1	; if 1, enables all optimizations
+Size_of_Snd_driver_guess	= $1200	; approximate size of compressed sound driver
 EnableSRAM:				= 0	; change to 1 to enable SRAM
 BackupSRAM:			= 0
 AddressSRAM:			= 0	; 0 = odd+even; 2 = even only; 3 = odd only
@@ -115,10 +116,10 @@ EndOfHeader:
 		include "Data/Decompression/Kosinski Module Decompression.asm"
 
 ; ---------------------------------------------------------------------------
-; Clone Driver - Functions Subroutine
+; Flamedriver - Functions Subroutine
 ; ---------------------------------------------------------------------------
 
-		include "Sound/Engine/Functions.asm"
+		include "Sound/Functions.asm"
 
 ; ---------------------------------------------------------------------------
 ; Fading Palettes Subroutine
@@ -448,10 +449,12 @@ EndOfHeader:
 		include "Misc Data/Music playlist.asm"
 
 ; ---------------------------------------------------------------------------
-; Clone sound driver subroutines
+; Flamewing sound driver subroutines
 ; ---------------------------------------------------------------------------
 
-		include "Sound/Engine/Sonic 2 Clone Driver v2.asm"
+		include "Sound/Flamedriver.asm"
+
+		align $100
 
 ; ---------------------------------------------------------------------------
 ; MegaCD Driver

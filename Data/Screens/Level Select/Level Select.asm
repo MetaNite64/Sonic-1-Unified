@@ -15,9 +15,9 @@ LevelSelect_SoundTestCount:		= LevelSelect_MusicTestCount+1
 LevelSelect_SampleTestCount:		= LevelSelect_SoundTestCount+1
 LevelSelect_MaxCount:			= 11
 LevelSelect_MaxCharacters:		= 4
-LevelSelect_MaxMusicNumber:		= (mus__Last-mus__First)
-LevelSelect_MaxSoundNumber:		= (sfx__Last-sfx__First)
-LevelSelect_MaxSampleNumber:	= (dac__Last-dac__First)
+LevelSelect_MaxMusicNumber:		= (Mus__End-Mus__First)-1
+LevelSelect_MaxSoundNumber:		= (sfx__End-sfx__First)
+LevelSelect_MaxSampleNumber:	= $58
 
 ; RAM
 	phase ramaddr(Object_load_addr_front)
@@ -199,8 +199,8 @@ LevelSelect_LoadMusicNumber:
 		andi.b	#btnABC,d1
 		beq.s	LevelSelect_Controls_ZoneAndAct.return
 		move.w	d3,d0
-		addq.w	#mus__First,d0		; $00 is reserved for silence
-		jmp	(SMPS_QueueSound1).w	; play music
+		addq.w	#Mus__First,d0		; $00 is reserved for silence
+		jmp	(Play_Music).w	; play music
 
 ; ---------------------------------------------------------------------------
 ; Load Sound
@@ -217,24 +217,27 @@ LevelSelect_LoadSoundNumber:
 		beq.s	LevelSelect_Controls_ZoneAndAct.return
 		move.w	d3,d0
 		addi.w	#sfx__First,d0
-		jmp	(SMPS_QueueSound2).w	; play sfx
+		jmp	(Play_SFX).w	; play sfx
 
 ; ---------------------------------------------------------------------------
 ; Load Sample
 ; ---------------------------------------------------------------------------
 
 LevelSelect_LoadSampleNumber:
-		moveq	#LevelSelect_MaxSampleNumber,d2
+		move.w	#LevelSelect_MaxSampleNumber,d2
 		move.w	(vLevelSelect_SampleCount).w,d3
 		lea	(vLevelSelect_CtrlTimer).w,a3
 		bsr.s	LevelSelect_FindLeftRightControls
 		move.w	d3,(vLevelSelect_SampleCount).w
 		move.b	(Ctrl_1_pressed).w,d1
 		andi.b	#btnABC,d1
-		beq.s	LevelSelect_Controls_ZoneAndAct.return
+		beq.s	+
 		move.w	d3,d0
-		addi.w	#dac__First,d0
-		jmp	(SMPS_PlayDACSample).w	; play sample
+		addq.w	#1,d0
+		jmp	(Play_Sample).w			; play sample
+		
++
+		rts
 
 ; ---------------------------------------------------------------------------
 ; Control (Up/Down)

@@ -200,7 +200,7 @@ Game_Program:
 		seq	(SegaCD_Mode).w
 		bsr.w	Init_DMA_Queue
 		bsr.s	Init_VDP
-		bsr.w	SoundDriverLoad
+		bsr.w	SndDrvInit
 		bsr.w	Init_Controllers
 		move.b	#id_LevelSelectScreen,(Game_mode).w		; set Game Mode
 

@@ -260,7 +260,7 @@ Tails_ChkInvin:
 		cmpi.b	#12,air_left(a0)
 		blo.s		Tails_RmvInvin
 		move.w	(Current_music).w,d0
-		jsr	(SMPS_QueueSound1).w					; stop playing invincibility theme and resume normal level music
+		jsr	(Play_Music).w					; stop playing invincibility theme and resume normal level music
 
 Tails_RmvInvin:
 		bclr	#Status_Invincible,status_secondary(a0)
@@ -279,7 +279,9 @@ Tails_ChkShoes:
 		move.w	#$C,2(a4)
 		move.w	#$80,4(a4)
 		bclr	#Status_SpeedShoes,status_secondary(a0)
-		music	mus_Slowdown,1						; run music at normal speed
+		moveq	#0,d0								; slow down tempo
+		jmp	(Change_Music_Tempo).w
+
 ; ---------------------------------------------------------------------------
 
 Tails_ExitChk:

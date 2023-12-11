@@ -375,7 +375,8 @@ loc_1D93A:
 		move.w	#$80,(Deceleration_P2).w
 
 loc_1D94C:
-		music	mus_Speedup,1								; speed up the music
+		moveq	#8,d0
+		jmp	(Change_Music_Tempo).w				; speed up the music
 ; ---------------------------------------------------------------------------
 
 Monitor_Give_Fire_Shield:

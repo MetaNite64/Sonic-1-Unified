@@ -211,7 +211,7 @@ Sonic_ChkInvin:										; checks if invincibility has expired and disables it i
 		cmpi.b	#12,air_left(a0)						; don't change music if drowning
 		blo.s		Sonic_RmvInvin
 		move.w	(Current_music).w,d0
-		jsr	(SMPS_QueueSound1).w					; stop playing invincibility theme and resume normal level music
+		jsr	(Play_Music).w					; stop playing invincibility theme and resume normal level music
 
 Sonic_RmvInvin:
 		bclr	#Status_Invincible,status_secondary(a0)
@@ -230,7 +230,9 @@ Sonic_ChkShoes:										; checks if Speed Shoes have expired and disables them 
 		move.w	#$C,2(a4)							; set Acceleration
 		move.w	#$80,4(a4)							; set Deceleration
 		bclr	#Status_SpeedShoes,status_secondary(a0)
-		music	mus_Slowdown,1						; run music at normal speed
+		moveq	#0,d0								; slow down tempo
+		jmp	(Change_Music_Tempo).w
+
 ; ---------------------------------------------------------------------------
 
 Sonic_ExitChk:

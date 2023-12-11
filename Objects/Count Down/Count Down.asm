@@ -386,7 +386,7 @@ Player_ResetAirTimer:
 		moveq	#signextendB(mus_Invincible),d0	; prepare to play invincibility music
 
 .notinvincible
-		jsr	(SMPS_QueueSound1).w
+		jsr	(Play_Music).w
 
 .end
 		move.b	#30,air_left(a1)					; reset air to full

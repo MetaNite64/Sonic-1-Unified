@@ -23,7 +23,7 @@ REM // allow the user to choose to print error messages out by supplying the -pe
 "Win32/as/asw.exe" -xx -q -c -A -L -U -i . Sonic.asm
 IF NOT EXIST Sonic.p pause & exit
 
-"Win32/as/p2bin" -p=FF -z=0,kosinski-optimised,Size_of_Mega_PCM_guess,after Sonic.p Sonic.gen Sonic.h
+"Win32/fdp2bin" Sonic.p Sonic.gen Sonic.h
 IF EXIST Sonic.p del Sonic.p
 IF EXIST Sonic.h del Sonic.h
 
@@ -36,9 +36,6 @@ REM // "Win32/rompad.exe" Sonic.gen 255 0
 
 REM // fix the rom header (checksum)
 "Win32/fixheader.exe" Sonic.gen
-
-REM // Copy rom to CD folder
-copy Sonic.gen _CD
 exit /b
 
 :LABLERROR1

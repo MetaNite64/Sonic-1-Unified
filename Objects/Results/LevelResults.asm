@@ -12,7 +12,7 @@ PlayerResults_Index:
 ; ---------------------------------------------------------------------------
 
 Obj_LevelResults:
-		music	mus_Fade							; fade out music
+		music	mus_FadeOut							; fade out music
 
 		; load general art
 		lea	(ArtKosM_ResultsGeneral).l,a1
