@@ -16,7 +16,7 @@ LevelSelect_SampleTestCount:		= LevelSelect_SoundTestCount+1
 LevelSelect_MaxCount:			= 11
 LevelSelect_MaxCharacters:		= 4
 LevelSelect_MaxMusicNumber:		= (Mus__End-Mus__First)-1
-LevelSelect_MaxSoundNumber:		= (sfx__End-sfx__First)
+LevelSelect_MaxSoundNumber:		= (sfx__End-sfx__First)-1
 LevelSelect_MaxSampleNumber:	= $58
 
 ; RAM
