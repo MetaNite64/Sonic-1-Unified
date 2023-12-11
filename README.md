@@ -1,17 +1,22 @@
-SONIC-CLEAN-ENGINE-S.C.E.-EXTENDED-
+SONIC-CLEAN-ENGINE-S.C.E.-EXTENDED- + Flamedriver
 
-Source code with the returned the Sonic & Tails, Tails and Knuckles characters, Life/Continue count, Continue screen.
+S.C.E. Extended with Flamedriver installed.
+
+Original Extended source code:
+
+https://github.com/TheBlad768/Sonic-Clean-Engine-S.C.E.-Extended-
 
 Main source code:
 
 https://github.com/TheBlad768/Sonic-Clean-Engine-S.C.E.-
 
-If you are interested in the source code with the Z80 Sound Driver:
+Main source code with Z80 Sound Driver:
 
 https://github.com/TheBlad768/Sonic-Clean-Engine-S.C.E.-Flamedriver-
 
 SPECIAL CREDITS:
 
+- TheBlad768 — The original S.C.E Extended Source Code.
 - pixelcat — New smooth ring graphics, act 3 and 4 numbers graphics.
 - FoxConED — Level Select font graphics.
 - Dolphman — Robotnik Head graphics.
