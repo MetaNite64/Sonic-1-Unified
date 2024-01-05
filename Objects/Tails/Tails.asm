@@ -275,9 +275,9 @@ Tails_ChkShoes:
 		bne.s	Tails_ExitChk
 		subq.b	#1,speed_shoes_timer(a0)
 		bne.s	Tails_ExitChk
-		move.w	#$600,(a4)
-		move.w	#$C,2(a4)
-		move.w	#$80,4(a4)
+		move.w	#$600,Max_speed_P2-Max_speed_P2(a4)
+		move.w	#$C,Acceleration_P2-Max_speed_P2(a4)
+		move.w	#$80,Deceleration_P2-Max_speed_P2(a4)
 		bclr	#Status_SpeedShoes,status_secondary(a0)
 		moveq	#0,d0								; slow down tempo
 		jmp	(Change_Music_Tempo).w
@@ -368,12 +368,15 @@ loc_13B50:
 		subi.w	#$C0,d0
 		tst.b	(Reverse_gravity_flag).w
 		beq.s	loc_13B78
-		addi.w	#$180,d0
+		addi.w	#$C0+$C0,d0
 
 loc_13B78:
 		move.w	d0,y_pos(a0)
 		ori.w	#$8000,art_tile(a0)
 		move.w	#$100,priority(a0)
+		move.w	#$600,Max_speed_P2-Max_speed_P2(a4)
+		move.w	#$C,Acceleration_P2-Max_speed_P2(a4)
+		move.w	#$80,Deceleration_P2-Max_speed_P2(a4)
 		moveq	#0,d0
 		move.l	d0,x_vel(a0)
 		move.w	d0,ground_vel(a0)
@@ -550,8 +553,8 @@ loc_13D78:
 loc_13DA6:
 		lea	(Pos_table).w,a2
 		moveq	#$10,d1
-		add.b	d2,d2
-		add.b	d2,d2
+		add.b	d1,d1
+		add.b	d1,d1
 		addq.b	#4,d1
 		move.w	(Pos_table_index).w,d0
 		sub.b	d1,d0
@@ -1136,7 +1139,7 @@ loc_14474:
 		addi.w	#$1C,y_pos(a1)
 		tst.b	(Reverse_gravity_flag).w
 		beq.s	loc_14492
-		subi.w	#$38,y_pos(a1)
+		subi.w	#$1C+$1C,y_pos(a1)
 
 loc_14492:
 		andi.b	#-4,render_flags(a1)
@@ -1279,9 +1282,9 @@ loc_1463A:
 		move.l	#Obj_AirCountdown,(v_Breathing_bubbles_P2+address).w
 		move.b	#$81,(v_Breathing_bubbles_P2+subtype).w
 		move.w	a0,(v_Breathing_bubbles_P2+parent).w
-		move.w	#$300,Max_speed-Max_speed(a4)
-		move.w	#6,Acceleration-Max_speed(a4)
-		move.w	#$40,Deceleration-Max_speed(a4)
+		move.w	#$300,Max_speed_P2-Max_speed_P2(a4)
+		move.w	#6,Acceleration_P2-Max_speed_P2(a4)
+		move.w	#$40,Deceleration_P2-Max_speed_P2(a4)
 		cmpi.w	#4,(Tails_CPU_routine).w
 		beq.s	loc_1469C
 		tst.b	object_control(a0)
@@ -1302,9 +1305,9 @@ loc_146BA:
 		addq.b	#1,(Water_entered_counter).w
 		movea.w	a0,a1
 		bsr.w	Player_ResetAirTimer
-		move.w	#$600,Max_speed-Max_speed(a4)
-		move.w	#$C,Acceleration-Max_speed(a4)
-		move.w	#$80,Deceleration-Max_speed(a4)
+		move.w	#$600,Max_speed_P2-Max_speed_P2(a4)
+		move.w	#$C,Acceleration_P2-Max_speed_P2(a4)
+		move.w	#$80,Deceleration_P2-Max_speed_P2(a4)
 		cmpi.b	#4,routine(a0)
 		beq.s	loc_14718
 		cmpi.w	#4,(Tails_CPU_routine).w
@@ -1564,9 +1567,9 @@ loc_149DA:
 ; =============== S U B R O U T I N E =======================================
 
 Tails_InputAcceleration_Path:
-		move.w	(a4),d6
-		move.w	2(a4),d5
-		move.w	4(a4),d4
+		move.w	Max_speed_P2-Max_speed_P2(a4),d6
+		move.w	Acceleration_P2-Max_speed_P2(a4),d5
+		move.w	Deceleration_P2-Max_speed_P2(a4),d4
 		tst.b	status_secondary(a0)
 		bmi.w	loc_14B5C
 		tst.w	move_lock(a0)
@@ -1908,9 +1911,9 @@ locret_14D30:
 ; =============== S U B R O U T I N E =======================================
 
 Tails_RollSpeed:
-		move.w	(a4),d6
+		move.w	Max_speed_P2-Max_speed_P2(a4),d6
 		asl.w	d6
-		move.w	2(a4),d5
+		move.w	Acceleration_P2-Max_speed_P2(a4),d5
 		asr.w	d5
 		move.w	#$20,d4
 		tst.b	spin_dash_flag(a0)
@@ -2055,8 +2058,8 @@ loc_14E72:
 ; =============== S U B R O U T I N E =======================================
 
 Tails_InputAcceleration_Freespace:
-		move.w	(a4),d6
-		move.w	2(a4),d5
+		move.w	Max_speed_P2-Max_speed_P2(a4),d6
+		move.w	Acceleration_P2-Max_speed_P2(a4),d5
 		asl.w	d5
 		btst	#Status_RollJump,status(a0)
 		bne.s	loc_14ECC
